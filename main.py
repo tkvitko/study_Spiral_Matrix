@@ -1,21 +1,25 @@
 def go_right(start_pos, value, list):
-    # Функция заполнения данных "направо"
-    x, y = start_pos[0], start_pos[1]  # координаты стартовой точки
+    """
+    Fill values "to the right"
+    """
+    x, y = start_pos[0], start_pos[1]  # coordinates of start position
 
-    while y < len(list):  # пока не достигли края
-        if list[x][y] == 0:  # если точка еще не заполнена
-            list[x][y] = value  # заполняем
+    while y < len(list):  # while the edge have not been reached
+        if list[x][y] == 0:  # if this position has not been filled
+            list[x][y] = value  # filling
         else:
-            break  # если заполнена, конец направления
+            break  # if already filled
         y += 1
         value += 1
 
-    next_pos = [x + 1, y - 1]  # возвращаем следующую позицию следующей функции
+    next_pos = [x + 1, y - 1]  # returns next position to the next function
     return next_pos, value
 
 
 def go_down(start_pos, value, list):
-    # Функция заполнения данных "вниз"
+    """
+    Fill values "to the down"
+    """
     x, y = start_pos[0], start_pos[1]
 
     while x < len(list):
@@ -31,7 +35,9 @@ def go_down(start_pos, value, list):
 
 
 def go_left(start_pos, value, list):
-    # Функция заполнения данных "налево"
+    """
+    Fill values "to the left"
+    """
     x, y = start_pos[0], start_pos[1]
 
     while y >= 0:
@@ -48,7 +54,9 @@ def go_left(start_pos, value, list):
 
 
 def go_up(start_pos, value, list):
-    # Функция заполнения данных "вверх"
+    """
+    Fill values "to the up"
+    """
     x, y = start_pos[0], start_pos[1]
 
     while x > 0:
@@ -65,7 +73,9 @@ def go_up(start_pos, value, list):
 
 
 def change_direction(direction):
-    # Функция вернет следующее направление для текущего (отработавшего) направления
+    """
+    Function returns "next" direction to the current (already filled) direction
+    """
 
     order = [go_right, go_down, go_left, go_up]
 
@@ -80,17 +90,17 @@ def change_direction(direction):
 
 if __name__ == '__main__':
 
-    size = int(input('Введите размер матрицы: '))
+    size = int(input('Enter the size of the matrix: '))
 
     matrix = [[0 for i in range(size)] for i in range(size)]
 
-    # Стартовые данные
+    # Initial data
     direction = go_right
     pos = [0, 0]
     value = 1
     step = 0
 
-    while step < size * 2:  # Для заполнения матрицы достаточно 2n шагов
+    while step < size * 2:  # 2n steps are enough to fill in the matrix
         new_pos, new_value = direction(pos, value, matrix)
         direction = change_direction(direction)
         pos = new_pos
